@@ -1,4 +1,3 @@
-; <COMPILER: v1.0.48.5>
 RegRead, UAC, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System, EnableLUA
 if !A_IsAdmin
 {
@@ -50,7 +49,7 @@ if !A_IsAdmin
   IniRead, h8, %A_WorkingDir%\SIH.ini, Others, Scoreboard, ``
   IniRead, sbX, %A_WorkingDir%\SIH.ini, Others, sbX,%A_Space%
   IniRead, sbY, %A_WorkingDir%\SIH.ini, Others, sbY,%A_Space%
-  IniRead, h9, %A_WorkingDir%\SIH.ini, Others, Autocast, !f
+  IniRead, h9, %A_WorkingDir%\SIH.ini, Others, Autocast, !F
   IniRead, h10, %A_WorkingDir%\SIH.ini, Others, Hold, %A_Space%
 
   IniRead, DONTshowConfig, %A_WorkingDir%\SIH.ini, Others, DONTshowConfig, 0
@@ -274,7 +273,7 @@ return
 configuration:
 if %configCreated%
 {
-gui, show, autosize center, SIH v1.9d
+gui, show, autosize center, SIH v1.9e
 }
 else {
 Gui 1:Default
@@ -344,7 +343,7 @@ Gui, Add, Button, x15 w83 h25 gSave, &Save
 gui, add, button, x+5 w83 h25 gtoTray, &Hide
 Gui, Add, Button, x+5 w83 h25 gExit, E&xit
 
-gui, show, autosize center, SIH v1.9d
+gui, show, autosize center, SIH v1.9e
 configCreated:=1
 }
 EmptyMem()
@@ -578,7 +577,7 @@ ExitApp
 return
 
 About:
-Run http://dota.zzl.org/sih
+Run http://auct.eu/sih/
 return
 
 2GuiEscape:
@@ -894,7 +893,7 @@ AutoCast:
    }
    BlockInput,MouseMove
    MouseGetPos, x0, y0
-   sendinput, {Click %x1%,  %y%, Right}{Click %x2%,  %y%, Right}{Click %x3%,  %y%, Right}{Click %x4%,  %y%, Right}{Click %x3%,  %y2%, Right}{Click %x0%, %y0%, 0}
+   SendPlay, {Click %x1%,  %y%, Right}{Click %x2%,  %y%, Right}{Click %x3%,  %y%, Right}{Click %x4%,  %y%, Right}{Click %x3%,  %y2%, Right}{Click %x0%, %y0%, 0}
    BlockInput,MouseMoveOff
 return
 
@@ -1019,8 +1018,8 @@ VK(Param)
 }
 
 
-EmptyMem(PID="SIH v1.9d"){
-    pid:=(pid="SIH v1.9d") ? DllCall("GetCurrentProcessId") : pid
+EmptyMem(PID="SIH v1.9e"){
+    pid:=(pid="SIH v1.9e") ? DllCall("GetCurrentProcessId") : pid
     h:=DllCall("OpenProcess", "UInt", 0x001F0FFF, "Int", 0, "Int", pid)
     DllCall("SetProcessWorkingSetSize", "UInt", h, "Int", -1, "Int", -1)
     DllCall("CloseHandle", "Int", h)
