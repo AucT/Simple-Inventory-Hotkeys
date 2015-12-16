@@ -49,7 +49,7 @@ Simply remaps items. Shift order support and chat free.
 ######Messages
 Sends up to 20 multiline messages.
 
-######Default Keys**
+######Default Keys
 * Alt+[ - Show ally hp bar
 * Alt+] - Show enemy hp bar
 * Alt+P - Pause game
