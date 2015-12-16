@@ -21,6 +21,8 @@ if !A_IsAdmin
   SetKeyDelay , -1, -1
   SetDefaultMouseSpeed, 0
   configCreated:=0
+  GroupAdd, WC3DOTA , Warcraft III
+  GroupAdd, WC3DOTA , DOTA 2
   VK_LIST = VK41,VK42,VK43,VK44,VK45,VK46,VK47,VK48,VK49,VK4A,VK4B,VK4C,VK4D,VK4E,VK4F,VK50,VK51,VK52,VK53,VK54,VK55,VK56,VK57,VK58,VK59,VK5A,VK30,VK31,VK32,VK33,VK34,VK35,VK36,VK37,VK38,VK39,VKC0,VKDB,VKDD,VKBE,VKBF,VKBA,VKDE
   HK_LIST = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0,1,2,3,4,5,6,7,8,9,``,[,],.,/,;,'
 
@@ -36,8 +38,7 @@ if !A_IsAdmin
   Menu, tray, add, Exit
   Menu, Tray, Icon, %A_ScriptDir%\%A_ScriptName%,1,1
 
-  SetCapsLockState, AlwaysOff
-  SetNumLockState, AlwaysOn
+
 
 
   IniRead, h1, %A_WorkingDir%\SIH.ini, Inventory, item1, %A_Space%
@@ -66,7 +67,7 @@ if !A_IsAdmin
   SetTimer,CheckActiveWar3
   }
 
-  Hotkey, ifWinActive, Warcraft III ahk_class Warcraft III
+  Hotkey, IfWinActive, ahk_group WC3DOTA
   loop {
 	  i:=A_Index+10
 	  IniRead, h%i%, %A_WorkingDir%\SIH.ini, Messages, hotkey%A_Index%, %A_Space%
@@ -251,10 +252,11 @@ return
 }
 
 
+
 configuration:
 if %configCreated%
 {
-gui, show, autosize center, SIH v1.9
+gui, show, autosize center, SIH v1.9b
 }
 else {
 Gui 1:Default
@@ -320,7 +322,7 @@ Gui, Add, Button, x15 w83 h25 gSave, &Save
 gui, add, button, x+5 w83 h25 gtoTray, &Hide
 Gui, Add, Button, x+5 w83 h25 gExit, E&xit
 
-gui, show, autosize center, SIH v1.9
+gui, show, autosize center, SIH v1.9b
 configCreated:=1
 }
 EmptyMem()
@@ -433,7 +435,6 @@ gui, 2:add, button, x+5 w100 h30 gHotkeyClose, Cancel
 gui, 2:show, autosize center, Choose hotkey...
 
 return
-
 
 HotkeyClose:
 gui, 2:destroy
@@ -586,81 +587,117 @@ Send {blind}0
 return
 
 Spaceh1:
+clipp:=clipboard
 clipboard:=" "
 send {vk67}{vk08}
 sleep, 50
 send ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 Spaceh1S:
 clipboard:=" "
 sendinput +{vk67}
 sleep, 50
 sendinput ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 
 Spaceh2:
+clipp:=clipboard
 clipboard:=" "
 send {vk68}{vk08}
 sleep, 50
 send ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 Spaceh2S:
+clipp:=clipboard
 clipboard:=" "
 sendinput +{vk68}
 sleep, 50
 sendinput ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 
 Spaceh3:
+clipp:=clipboard
 clipboard:=" "
 send {vk64}{vk08}
 sleep, 50
 send ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 Spaceh3S:
+clipp:=clipboard
+clip:=clipboard
 clipboard:=" "
 sendinput +{vk64}
 sleep, 50
 sendinput ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 
 Spaceh4:
+clipp:=clipboard
 clipboard:=" "
 send {vk65}{vk08}
 sleep, 50
 send ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 Spaceh4S:
+clipp:=clipboard
 clipboard:=" "
 sendinput +{vk65}
 sleep, 50
 sendinput ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 
 Spaceh5:
+clipp:=clipboard
 clipboard:=" "
 send {vk61}{vk08}
 sleep, 50
 send ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 Spaceh5S:
+clipp:=clipboard
 clipboard:=" "
 sendinput +{vk61}
 sleep, 50
 sendinput ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 
 Spaceh6:
+clipp:=clipboard
 clipboard:=" "
 send {vk62}{vk08}
 sleep, 50
 send ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 Spaceh6S:
+clipp:=clipboard
 clipboard:=" "
 sendinput +{vk62}
 sleep, 50
 sendinput ^{vk56}
+sleep, 50
+clipboard:=clipp
 return
 
 h1:
@@ -843,9 +880,18 @@ i := SubStr(A_ThisLabel,8)
 loop, parse, Mes%i%, `n
 {
 if toAll%i%
-send +{vk0D}{RAW}%A_LoopField%
+{
+send +{vk0D}
+sleep, 30
+send {RAW}%A_LoopField%
+}
 else
-send {vk0D}{RAW}%A_LoopField%
+{
+
+send {vk0D}
+sleep, 30
+send {RAW}%A_LoopField%
+}
 send {vk0D}
 sleep, 1
 }
@@ -903,8 +949,8 @@ VK(Param)
 }
 
 
-EmptyMem(PID="SIH v1.9"){
-    pid:=(pid="SIH v1.9") ? DllCall("GetCurrentProcessId") : pid
+EmptyMem(PID="SIH v1.9b"){
+    pid:=(pid="SIH v1.9b") ? DllCall("GetCurrentProcessId") : pid
     h:=DllCall("OpenProcess", "UInt", 0x001F0FFF, "Int", 0, "Int", pid)
     DllCall("SetProcessWorkingSetSize", "UInt", h, "Int", -1, "Int", -1)
     DllCall("CloseHandle", "Int", h)
@@ -917,7 +963,7 @@ Suspend
 return
 
 Garena:
-ifWinActive, Warcraft III ahk_class Warcraft III
+#ifWinActive, ahk_group WC3DOTA
 return
 gojoin:=!gojoin
 if gojoin
