@@ -39,8 +39,6 @@ if !A_IsAdmin
   Menu, Tray, Icon, %A_ScriptDir%\%A_ScriptName%,1,1
 
 
-
-
   IniRead, h1, %A_WorkingDir%\SIH.ini, Inventory, item1, %A_Space%
   IniRead, h2, %A_WorkingDir%\SIH.ini, Inventory, item2, %A_Space%
   IniRead, h3, %A_WorkingDir%\SIH.ini, Inventory, item3, %A_Space%
@@ -256,7 +254,7 @@ return
 configuration:
 if %configCreated%
 {
-gui, show, autosize center, SIH v1.9b
+gui, show, autosize center, SIH v1.9c
 }
 else {
 Gui 1:Default
@@ -322,7 +320,7 @@ Gui, Add, Button, x15 w83 h25 gSave, &Save
 gui, add, button, x+5 w83 h25 gtoTray, &Hide
 Gui, Add, Button, x+5 w83 h25 gExit, E&xit
 
-gui, show, autosize center, SIH v1.9b
+gui, show, autosize center, SIH v1.9c
 configCreated:=1
 }
 EmptyMem()
@@ -466,7 +464,7 @@ Gui, Submit, Nohide
 GUIControl -Redraw,HG_Key
 
 if (RadioKey = 1)
-GuiControl,, HG_Key, |A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|1|2|3|4|5|6|7|8|9|0|``|-|=|\|[|]|;|''|,|.|/|Space|Tab|Enter|Escape|Delete|ScrollLock|CapsLock|NumLock|PrintScreen|BackSpace|CtrlBreak|Pause|Break|Up|Down|Left|Right|Home|End|Insert|Page Up|Page Down
+GuiControl,, HG_Key, |A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|1|2|3|4|5|6|7|8|9|0|``|-|=|\|[|]|;|'|,|.|/|Space|Tab|Enter|Escape|Delete|ScrollLock|CapsLock|NumLock|PrintScreen|BackSpace|CtrlBreak|Pause|Break|Up|Down|Left|Right|Home|End|Insert|Page Up|Page Down
 if (RadioKey = 2)
 GuiControl,, HG_Key, |F1|F2|F3|F4|F5|F6|F7|F8|F9|F10|F11|F12|LWin|RWin|LControl|RControl|LShift|RShift|LAlt|RAlt
 if (RadioKey = 3)
@@ -537,7 +535,7 @@ ExitApp
 return
 
 About:
-Run http://sih.isgreat.org/index.html
+Run http://dota.zzl.org/sih
 return
 
 2GuiEscape:
@@ -876,6 +874,26 @@ Message17:
 Message18:
 Message19:
 Message20:
+Message21:
+Message22:
+Message23:
+Message24:
+Message25:
+Message26:
+Message27:
+Message28:
+Message29:
+Message30:
+Message31:
+Message32:
+Message33:
+Message34:
+Message35:
+Message36:
+Message37:
+Message38:
+Message39:
+Message40:
 i := SubStr(A_ThisLabel,8)
 loop, parse, Mes%i%, `n
 {
@@ -935,6 +953,14 @@ VK(Param)
 	return % RegExReplace(Param, "\[$", "VKDB")
 	if InStr(Param,"]")
 	return % RegExReplace(Param, "\]$", "VKDD")
+	if InStr(Param,"\")
+	return % RegExReplace(Param, "\\$", "VKDC")
+	if InStr(Param,",")
+	return % RegExReplace(Param, "\,$", "VKBC")
+	if InStr(Param,".")
+	return % RegExReplace(Param, "\.$", "VKBE")
+	if InStr(Param,"/")
+	return % RegExReplace(Param, "\/$", "VKBF")
 	Hotkey:=RegExReplace(Param, "[\^\!\+\#]+(.*)", "$1")
 	If StrLen(Hotkey) > 1
 		return Param
@@ -949,8 +975,8 @@ VK(Param)
 }
 
 
-EmptyMem(PID="SIH v1.9b"){
-    pid:=(pid="SIH v1.9b") ? DllCall("GetCurrentProcessId") : pid
+EmptyMem(PID="SIH v1.9c"){
+    pid:=(pid="SIH v1.9c") ? DllCall("GetCurrentProcessId") : pid
     h:=DllCall("OpenProcess", "UInt", 0x001F0FFF, "Int", 0, "Int", pid)
     DllCall("SetProcessWorkingSetSize", "UInt", h, "Int", -1, "Int", -1)
     DllCall("CloseHandle", "Int", h)
