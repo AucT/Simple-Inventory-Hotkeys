@@ -36,7 +36,6 @@ if !A_IsAdmin
   Menu, tray, add, About, About
   Menu, tray, add
   Menu, tray, add, Exit
-  Menu, Tray, Icon, %A_ScriptDir%\%A_ScriptName%,1,1
 
 
   IniRead, h1, %A_WorkingDir%\SIH.ini, Inventory, item1, %A_Space%
@@ -49,10 +48,13 @@ if !A_IsAdmin
 
   IniRead, h7, %A_WorkingDir%\SIH.ini, Others, LearnSkills, CapsLock
   IniRead, h8, %A_WorkingDir%\SIH.ini, Others, Scoreboard, ``
+  IniRead, sbX, %A_WorkingDir%\SIH.ini, Others, sbX,%A_Space%
+  IniRead, sbY, %A_WorkingDir%\SIH.ini, Others, sbY,%A_Space%
   IniRead, h9, %A_WorkingDir%\SIH.ini, Others, Autocast, !f
   IniRead, h10, %A_WorkingDir%\SIH.ini, Others, Hold, %A_Space%
 
   IniRead, DONTshowConfig, %A_WorkingDir%\SIH.ini, Others, DONTshowConfig, 0
+  IniRead, TMPHIDE, %A_WorkingDir%\SIH.ini, Others,TMPHIDE, 0
   IniRead, ShieldLWin, %A_WorkingDir%\SIH.ini, Others, ShieldLWin, 0
   IniRead, RunAtStart, %A_WorkingDir%\SIH.ini, Others, RunAtStart, 0
   IniRead, CustomGroups, %A_WorkingDir%\SIH.ini, Others, CustomGroups, 0
@@ -103,6 +105,7 @@ if !A_IsAdmin
 		}
 		else {
 		Hotkey,%vh1%, h1
+		if (!InStr(vh1, "&"))
 		Hotkey,+%vh1%, h1s
 		}
 	}
@@ -119,6 +122,7 @@ if !A_IsAdmin
 		}
 		else {
 		Hotkey,%vh2%, h2
+		if (!InStr(vh2, "&"))
 		Hotkey,+%vh2%, h2s
 		}
 	}
@@ -135,6 +139,7 @@ if !A_IsAdmin
 		}
 		else {
 		Hotkey,%vh3%, h3
+		if (!InStr(vh3, "&"))
 		Hotkey,+%vh3%, h3s
 		}
 	}
@@ -151,7 +156,7 @@ if !A_IsAdmin
 		}
 		else {
 		Hotkey,%vh4%, h4
-		Hotkey,+%vh4%, h4s
+
 		}
 	}
 	if vh5
@@ -167,6 +172,7 @@ if !A_IsAdmin
 		}
 		else {
 		Hotkey,%vh5%, h5
+		if (!InStr(vh5, "&"))
 		Hotkey,+%vh5%, h5s
 		}
 	}
@@ -183,6 +189,7 @@ if !A_IsAdmin
 		}
 		else {
 		Hotkey,%vh6%, h6
+		if (!InStr(vh6, "&"))
 		Hotkey,+%vh6%, h6s
 		}
 	}
@@ -210,6 +217,14 @@ SetTimer, UnsendO, off
 Hotkey,%vh7%, SendO
 }
 }
+if !sbX
+sbX:=189/192
+else
+sbX:=sbX/A_ScreenWidth
+if !sbY
+sbY:=7/120
+else
+sbY:=sbY/A_ScreenHeight
 if h8 {
 if UAC
 Hotkey,%vh8%, ScoreBoardUAC
@@ -241,7 +256,14 @@ Hotkey, ^F4, group3
 Hotkey, ifWinActive
 if %Toggle%
 Hotkey,% VK(Toggle), ToggleScript
+Hotkey, IfWinActive, Garena
 Hotkey,!vk4A, Garena
+Hotkey, ifWinActive
+if TMPHIDE {
+EmptyMem()
+IniWrite, 0, %A_WorkingDir%\SIH.ini, Others, TMPHIDE
+return
+}
 if DONTshowConfig
 {
 TrayTip,SIH,I'm here, 5,1
@@ -249,12 +271,10 @@ EmptyMem()
 return
 }
 
-
-
 configuration:
 if %configCreated%
 {
-gui, show, autosize center, SIH v1.9c
+gui, show, autosize center, SIH v1.9d
 }
 else {
 Gui 1:Default
@@ -305,12 +325,16 @@ Alt+[ - show ally's hp bar
 Alt+] - show enemy's hp bar
 Alt+P - Pause/Resume "game"
 
+/setsb - set custom position of scoreboard
+/unsetsb - delete custom position of scoreboard
+/reload - reloads app
+
 Home - Activate/Deactivate tool
 Alt+J - Join to garena room (2xclick)
 )
 
 Gui, Font, s10 underline
-Gui, Add, Text,x20 y34 cBlue gAbout, SIH - Simple Inventory Hotkeys!
+Gui, Add, Text,x20 y24 cBlue gAbout, SIH - Simple Inventory Hotkeys!
 Gui, Font
 gui, add, text,y+10,%Readme%
 
@@ -320,7 +344,7 @@ Gui, Add, Button, x15 w83 h25 gSave, &Save
 gui, add, button, x+5 w83 h25 gtoTray, &Hide
 Gui, Add, Button, x+5 w83 h25 gExit, E&xit
 
-gui, show, autosize center, SIH v1.9c
+gui, show, autosize center, SIH v1.9d
 configCreated:=1
 }
 EmptyMem()
@@ -521,7 +545,26 @@ return
 ::-c::-clear
 ::-u::-unlock
 ::-r::-roll
-::btw::by the way
+::/setsb::
+MouseGetPos, xp, yp
+IniWrite, %xp%, %A_WorkingDir%\SIH.ini, Others, sbX
+IniWrite, %yp%, %A_WorkingDir%\SIH.ini, Others, sbY
+IniWrite, 1, %A_WorkingDir%\SIH.ini, Others, TMPHIDE
+send {vk0D}
+reload
+return
+
+::/unsetsb::
+IniDelete, %A_WorkingDir%\SIH.ini, Others, sbX
+IniDelete, %A_WorkingDir%\SIH.ini, Others, sbY
+IniWrite, 1, %A_WorkingDir%\SIH.ini, Others, TMPHIDE
+send {vk0D}
+reload
+return
+::/reload::
+IniWrite, 1, %A_WorkingDir%\SIH.ini, Others, TMPHIDE
+send {vk0D}
+reload
 return
 
 Save:
@@ -770,33 +813,34 @@ return
 
 ScoreBoardUAC:
    if _locked {
-   x:=left+cWidth*1651/1680
-   y:=top+cHeight*0.06
+   x:=left+cWidth*sbX
+   y:=top+cHeight*sbY
    }
    else {
-   x:=A_ScreenWidth*1651/1680
-   y:=A_ScreenHeight*0.06
+   x:=A_ScreenWidth*sbX
+   y:=A_ScreenHeight*sbY
    }
    BlockInput,MouseMove
    MouseGetPos, x0, y0
    MouseMove,x,y
-   sleep,1
+   sleep,10
    Click
    Send {Click %x0%,  %y0%, 0}
    BlockInput,MouseMoveOff
 return
 ScoreBoard:
    if _locked {
-   x:=left+cWidth*1651/1680
-   y:=top+cHeight*0.06
+   x:=left+cWidth*sbX
+   y:=top+cHeight*sbY
    }
    else {
-   x:=A_ScreenWidth*1651/1680
-   y:=A_ScreenHeight*0.06
+   x:=A_ScreenWidth*sbX
+   y:=A_ScreenHeight*sbY
    }
    BlockInput,MouseMove
    MouseGetPos, x0, y0
    sendinput, {Click %x%,  %y%, 0}
+   sleep, 80
    Click
    sendinput, {Click %x0%,  %y0%, 0}
    BlockInput,MouseMoveOff
@@ -975,8 +1019,8 @@ VK(Param)
 }
 
 
-EmptyMem(PID="SIH v1.9c"){
-    pid:=(pid="SIH v1.9c") ? DllCall("GetCurrentProcessId") : pid
+EmptyMem(PID="SIH v1.9d"){
+    pid:=(pid="SIH v1.9d") ? DllCall("GetCurrentProcessId") : pid
     h:=DllCall("OpenProcess", "UInt", 0x001F0FFF, "Int", 0, "Int", pid)
     DllCall("SetProcessWorkingSetSize", "UInt", h, "Int", -1, "Int", -1)
     DllCall("CloseHandle", "Int", h)
@@ -989,8 +1033,6 @@ Suspend
 return
 
 Garena:
-#ifWinActive, ahk_group WC3DOTA
-return
 gojoin:=!gojoin
 if gojoin
 {
