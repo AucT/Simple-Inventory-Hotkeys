@@ -4,8 +4,8 @@
   setbatchlines -1
   setkeydelay -1
   SetWorkingDir %A_ScriptDir%
-  VK_LIST = VK41,VK42,VK43,VK44,VK45,VK46,VK47,VK48,VK49,VK4A,VK4B,VK4C,VK4D,VK4E,VK4F,VK50,VK51,VK52,VK53,VK54,VK55,VK56,VK57,VK58,VK59,VK5A,VKC0
-  HK_LIST = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,``
+  VK_LIST = VK41,VK42,VK43,VK44,VK45,VK46,VK47,VK48,VK49,VK4A,VK4B,VK4C,VK4D,VK4E,VK4F,VK50,VK51,VK52,VK53,VK54,VK55,VK56,VK57,VK58,VK59,VK5A,VKC0,VK30,VK31,VK32,VK33,VK34,VK35,VK36,VK37,VK38,VK39
+  HK_LIST = A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,``,0,1,2,3,4,5,6,7,8,9
 
   configCreated:=0
 
@@ -13,93 +13,97 @@
   Menu, tray, add, Configuration, configuration
   Menu, tray, Default, Configuration
   Menu, tray, add
+  Menu, tray, add, About, About
+  Menu, tray, add
   Menu, tray, add, Exit
 
 
 ifExist, %A_WorkingDir%\sih.ini
 {
-  IniRead, item1, %A_WorkingDir%\sih.ini, Inventory, item1
-  IniRead, item2, %A_WorkingDir%\sih.ini, Inventory, item2
-  IniRead, item3, %A_WorkingDir%\sih.ini, Inventory, item3
-  IniRead, item4, %A_WorkingDir%\sih.ini, Inventory, item4
-  IniRead, item5, %A_WorkingDir%\sih.ini, Inventory, item5
-  IniRead, item6, %A_WorkingDir%\sih.ini, Inventory, item6
+  IniRead, h1, %A_WorkingDir%\sih.ini, Inventory, item1, %A_Space%
+  IniRead, h2, %A_WorkingDir%\sih.ini, Inventory, item2, %A_Space%
+  IniRead, h3, %A_WorkingDir%\sih.ini, Inventory, item3, %A_Space%
+  IniRead, h4, %A_WorkingDir%\sih.ini, Inventory, item4, %A_Space%
+  IniRead, h5, %A_WorkingDir%\sih.ini, Inventory, item5, %A_Space%
+  IniRead, h6, %A_WorkingDir%\sih.ini, Inventory, item6, %A_Space%
 
-  IniRead, chat, %A_WorkingDir%\sih.ini, Options, chat
-  IniRead, autodetect, %A_WorkingDir%\sih.ini, Options, autodetect
-  IniRead, toggle, %A_WorkingDir%\sih.ini, Options, toggle
-  IniRead, DONTshowConfig, %A_WorkingDir%\sih.ini, Options, DONTshowConfig
-  IniRead, ScrollIndicator, %A_WorkingDir%\sih.ini, Options, ScrollIndicator
-  IniRead, RunOnStart, %A_WorkingDir%\sih.ini, Options, RunOnStart
-  IniRead, pause, %A_WorkingDir%\sih.ini, Options, pause
+  IniRead, h7, %A_WorkingDir%\sih.ini, Options, toggle, %A_Space%
+  IniRead, h8, %A_WorkingDir%\sih.ini, Options, pause, %A_Space%
+
+  IniRead, chat, %A_WorkingDir%\sih.ini, Options, chat, %A_Space%
+  IniRead, autodetect, %A_WorkingDir%\sih.ini, Options, autodetect, %A_Space%
+  IniRead, DONTshowConfig, %A_WorkingDir%\sih.ini, Options, DONTshowConfig, %A_Space%
+  IniRead, ScrollIndicator, %A_WorkingDir%\sih.ini, Options, ScrollIndicator, %A_Space%
+  IniRead, RunOnStart, %A_WorkingDir%\sih.ini, Options, RunOnStart, %A_Space%
+
 } else {
-  item1=!q
-  item2=!w
-  item3=!a
-  item4=!s
-  item5=!z
-  item6=!x
+  h1=!q
+  h2=!w
+  h3=!a
+  h4=!s
+  h5=!z
+  h6=!x
+  h7=Home
+  h8=!P
   autodetect:=1
   chat:=1
-  toggle=Home
   DONTshowConfig:=0
   ScrollIndicator:=1
   RunOnStart:=0
-  pause=!P
+
   Gosub, WriteIni
 
 }
 
-  vitem1:=VK(item1)
-  vitem2:=VK(item2)
-  vitem3:=VK(item3)
-  vitem4:=VK(item4)
-  vitem5:=VK(item5)
-  vitem6:=VK(item6)
-
-  vtoggle:=VK(toggle)
-  vpause:=VK(pause)
+  vh1:=VK(h1)
+  vh2:=VK(h2)
+  vh3:=VK(h3)
+  vh4:=VK(h4)
+  vh5:=VK(h5)
+  vh6:=VK(h6)
+  vh7:=VK(h7)
+  vh8:=VK(h8)
 
 if %autodetect%
 {
-	if %item1%
-	Hotkey, %vitem1%, item1D
-	Hotkey, +%vitem1%, item1SD
-	if %item2%
-	Hotkey,%vitem2%, item2D
-	Hotkey,+%vitem2%, item2SD
-	if %item3%
-	Hotkey,%vitem3%, item3D
-	Hotkey,+%vitem3%, item3SD
-	if %item4%
-	Hotkey,%vitem4%, item4D
-	Hotkey,+%vitem4%, item4SD
-	if %item5%
-	Hotkey,%vitem5%, item5D
-	Hotkey,+%vitem5%, item5SD
-	if %item6%
-	Hotkey,%vitem6%, item6D
-	Hotkey,+%vitem6%, item6SD
+	if %h1%
+	Hotkey, %vh1%, h1D
+	Hotkey, +%vh1%, h1SD
+	if %h2%
+	Hotkey,%vh2%, h2D
+	Hotkey,+%vh2%, h2SD
+	if %h3%
+	Hotkey,%vh3%, h3D
+	Hotkey,+%vh3%, h3SD
+	if %h4%
+	Hotkey,%vh4%, h4D
+	Hotkey,+%vh4%, h4SD
+	if %h5%
+	Hotkey,%vh5%, h5D
+	Hotkey,+%vh5%, h5SD
+	if %h6%
+	Hotkey,%vh6%, h6D
+	Hotkey,+%vh6%, h6SD
 }
 else {
-	if %vitem1%
-	Hotkey,%vitem1%, item1
-	Hotkey,+%vitem1%, item1S
-	if %item2%
-	Hotkey,%vitem2%, item2
-	Hotkey,+%vitem2%, item2S
-	if %item3%
-	Hotkey,%vitem3%, item3
-	Hotkey,+%vitem3%, item3S
-	if %vitem4%
-	Hotkey,%vitem4%, item4
-	Hotkey,+%vitem4%, item4S
-	if %vitem5%
-	Hotkey,%vitem5%, item5
-	Hotkey,+%vitem5%, item5S
-	if %item6%
-	Hotkey,%vitem6%, item6
-	Hotkey,+%vitem6%, item6S
+	if %vh1%
+	Hotkey,%vh1%, h1
+	Hotkey,+%vh1%, h1S
+	if %vh2%
+	Hotkey,%vh2%, h2
+	Hotkey,+%vh2%, h2S
+	if %vh3%
+	Hotkey,%vh3%, h3
+	Hotkey,+%vh3%, h3S
+	if %vh4%
+	Hotkey,%vh4%, h4
+	Hotkey,+%vh4%, h4S
+	if %vh5%
+	Hotkey,%vh5%, h5
+	Hotkey,+%vh5%, h5S
+	if %vh6%
+	Hotkey,%vh6%, h6
+	Hotkey,+%vh6%, h6S
 }
 
 if %chat%
@@ -111,19 +115,19 @@ Hotkey, ~LButton, KEYSON
 }
 
 if %RunOnStart%
-FileCreateShortcut , %A_ScriptDir%\SIH v1.1c.exe, %A_Startup%\SIH v1.1c.lnk
+FileCreateShortcut , %A_ScriptDir%\%A_ScriptName%, %A_Startup%\SIH.lnk
 else{
-IfExist %A_Startup%\SIH v1.1c.lnk
-FileDelete, %A_Startup%\SIH v1.1c.lnk
+IfExist %A_Startup%\SIH.lnk
+FileDelete, %A_Startup%\SIH.lnk
 }
 if %ScrollIndicator%
 SetScrollLockState, On
 else
 SetScrollLockState, Off
-if %toggle%
-Hotkey,%toggle%, ToggleScript
-if %pause%
-Hotkey,%pause%, PauseGame
+if %h7%
+Hotkey,%vh7%, ToggleScript
+if %h8%
+Hotkey,%vh8%, PauseGame
 if %DONTshowConfig%
 return
 
@@ -131,31 +135,31 @@ return
 configuration:
 if %configCreated%
 {
-gui, show, autosize center, SIH v1.1c
+gui, show, autosize center, SIH v1.2
 }
 else {
 Gui 1:Default
 Gui, Add, Tab2, y0 h190, Inventory|Options
 Gui, Tab, Inventory
 gui, font, s11, Verdana
-Gui, Add, Button, vb1 gSetItem x15 y35 w120 h40 , %item1%
-Gui, Add, Button, vb2 gSetItem x155 y35 w120 h40 , %item2%
-Gui, Add, Button, vb3 gSetItem x15 y85 w120 h40 , %item3%
-Gui, Add, Button, vb4 gSetItem x155 y85 w120 h40 , %item4%
-Gui, Add, Button, vb5 gSetItem x15 y135 w120 h40 , %item5%
-Gui, Add, Button, vb6 gSetItem x155 y135 w120 h40 , %item6%
+Gui, Add, Button, vb1 gSetItem x15 y35 w120 h40 , %h1%
+Gui, Add, Button, vb2 gSetItem x155 y35 w120 h40 , %h2%
+Gui, Add, Button, vb3 gSetItem x15 y85 w120 h40 , %h3%
+Gui, Add, Button, vb4 gSetItem x155 y85 w120 h40 , %h4%
+Gui, Add, Button, vb5 gSetItem x15 y135 w120 h40 , %h5%
+Gui, Add, Button, vb6 gSetItem x155 y135 w120 h40 , %h6%
 gui, font
 Gui, Tab, Options
 Gui, Add, CheckBox, Checked%chat% vchat x20 y34 h20 , Chat-Suspend
 Gui, Add, CheckBox, Checked%autodetect% vautodetect x+5 h20 , Lobby-Suspend
 
 Gui, add, checkbox, Checked%ScrollIndicator% vScrollIndicator x20 y64, Scroll Indicator
-Gui, add, checkbox, Checked%RunOnStart% vRunOnStart x+2, Run on startup
+Gui, add, checkbox, Checked%RunOnStart% vRunOnStart  x+2, Run on startup
 
-Gui, add, hotkey, vtoggle x20 y+15 w60, %toggle%
+Gui, add, hotkey, vh7 gSetOption1 x20 y+15 w60, %h7%
 gui, add, text, x+5, Activate/Deactivate Tool
 
-gui, add, hotkey, vpause x20 y+20 w60, %pause%
+gui, add, hotkey, vh8 gSetOption2 x20 y+20 w60, %h8%
 gui, add, text, x+5, Pause Game
 
 Gui, Add, CheckBox, Checked%DONTshowConfig% vDONTshowConfig x20 y+10 h20 , Don't show it again
@@ -169,11 +173,36 @@ Gui, Add, Button, x15 w83 h25 gSave, Save
 gui, add, button, x+5 w83 h25 gtoTray, Hide
 Gui, Add, Button, x+5 w83 h25 gExit, Exit
 
-gui, show, autosize center, SIH v1.1c
+gui, show, autosize center, SIH v1.2
 configCreated:=1
 }
 return
 
+SetOption1:
+if %A_GuiControl%
+loop, 8
+{
+if (%A_GuiControl%=h%A_Index% and A_Index!=7)
+{
+GuiControl,,%A_GuiControl%,
+MsgBox 262160, Error ,Dublicate Hotkeys not allowed
+return
+}
+}
+return
+
+SetOption2:
+if %A_GuiControl%
+loop, 8
+{
+if (%A_GuiControl%=h%A_Index% and A_Index!=8)
+{
+GuiControl,,%A_GuiControl%,
+MsgBox 262160, Error ,Dublicate Hotkeys not allowed
+return
+}
+}
+return
 
 SetItem:
 ChoosenB=%A_GuiControl%
@@ -222,11 +251,11 @@ return
 
 Hotkey_AcceptButton:
 Gui, Submit
-loop, 6
+loop, 8
 {
 if %HG_Hotkey%
 {
-if (HG_Hotkey=item%A_Index%)
+if (HG_Hotkey=h%A_Index%)
 {
 gui, 2:destroy
 MsgBox 262160, Error ,Dublicate Hotkeys not allowed
@@ -235,20 +264,20 @@ return
 }
 }
 if ChoosenB=b1
-item1=%HG_Hotkey%
+h1=%HG_Hotkey%
 if ChoosenB=b2
-item2=%HG_Hotkey%
+h2=%HG_Hotkey%
 if ChoosenB=b3
-item3=%HG_Hotkey%
+h3=%HG_Hotkey%
 if ChoosenB=b4
-item4=%HG_Hotkey%
+h4=%HG_Hotkey%
 if ChoosenB=b5
-item5=%HG_Hotkey%
+h5=%HG_Hotkey%
 if ChoosenB=b6
-item6=%HG_Hotkey%
+h6=%HG_Hotkey%
 
 gui, 2:destroy
-ItemDialog:=0
+hDialog:=0
 Gui 1:Default
 GuiControl Text, %ChoosenB%, %HG_Hotkey%
 return
@@ -266,13 +295,10 @@ GuiControl,, HG_Key, |Numpad0|Numpad1|Numpad2|Numpad3|Numpad4|Numpad5|Numpad6|Nu
 if (RadioKey = 4)
 GuiControl,, HG_Key, |LButton|RButton|MButton|WheelUp|WheelDown|XButton1|XButton2
 if (RadioKey = 5)
-GuiControl,, HG_Key, |Browser_back|Browser_forward|Browser_refresh|Browser_stop|Browser_search|Browser_favorites|Browser_home|volume_mute|volume_down|volume_up|Media_next|Media_prev|Media_stop|Media_play_pause|launch_media|launch_mail|launch_app1|launch_app2|Help|Sleep
+GuiControl,, HG_Key, |Browser_back|Browser_forward|Browser_refresh|Browser_stop|Browser_search|Browser_favorites|Browser_home|volume_mute|volume_down|volume_up|Media_next|Media_prev|Media_stop|Media_play_h8|launch_media|launch_mail|launch_app1|launch_app2|Help|Sleep
 if (RadioKey = 6)
 GuiControl,, HG_Key,
 GUIControl +Redraw,HG_Key
-
-
-
 return
 
 
@@ -322,6 +348,10 @@ Exit:
 ExitApp
 return
 
+About:
+Run http://sih.isgreat.org/index.html
+return
+
 2GuiEscape:
 2GuiClose:
 gui, 2:destroy
@@ -333,162 +363,164 @@ gui, hide
 return
 
 WriteIni:
-  IniWrite, %item1%, %A_WorkingDir%\sih.ini, Inventory, item1
-  IniWrite, %item2%, %A_WorkingDir%\sih.ini, Inventory, item2
-  IniWrite, %item3%, %A_WorkingDir%\sih.ini, Inventory, item3
-  IniWrite, %item4%, %A_WorkingDir%\sih.ini, Inventory, item4
-  IniWrite, %item5%, %A_WorkingDir%\sih.ini, Inventory, item5
-  IniWrite, %item6%, %A_WorkingDir%\sih.ini, Inventory, item6
+  IniWrite, %h1%, %A_WorkingDir%\sih.ini, Inventory, item1
+  IniWrite, %h2%, %A_WorkingDir%\sih.ini, Inventory, item2
+  IniWrite, %h3%, %A_WorkingDir%\sih.ini, Inventory, item3
+  IniWrite, %h4%, %A_WorkingDir%\sih.ini, Inventory, item4
+  IniWrite, %h5%, %A_WorkingDir%\sih.ini, Inventory, item5
+  IniWrite, %h6%, %A_WorkingDir%\sih.ini, Inventory, item6
+
+  IniWrite, %h7%, %A_WorkingDir%\sih.ini, Options, toggle
+  IniWrite, %h8%, %A_WorkingDir%\sih.ini, Options, pause
 
   IniWrite, %chat%, %A_WorkingDir%\sih.ini, Options, chat
   IniWrite, %autodetect%, %A_WorkingDir%\sih.ini, Options, autodetect
-  IniWrite, %toggle%, %A_WorkingDir%\sih.ini, Options, toggle
   IniWrite, %DONTshowConfig%, %A_WorkingDir%\sih.ini, Options, DONTshowConfig
   IniWrite, %ScrollIndicator%, %A_WorkingDir%\sih.ini, Options, ScrollIndicator
   IniWrite, %RunOnStart%, %A_WorkingDir%\sih.ini, Options, RunOnStart
-  IniWrite, %pause%, %A_WorkingDir%\sih.ini, Options, pause
+
 return
 
 
 #IfWinActive Warcraft III
-item1:
+h1:
 send {vk67}
 return
-item1S:
+h1S:
 sendplay +{vk67}
 return
 
 
-item2:
+h2:
 send {vk68}
 return
-item2S:
+h2S:
 sendplay +{vk68}
 return
 
 
-item3:
+h3:
 send {vk64}
 return
-item3S:
+h3S:
 sendplay +{vk64}
 return
 
-item4:
+h4:
 send {vk65}
 return
-item4S:
+h4S:
 sendplay +{vk65}
 return
 
 
-item5:
+h5:
 send {vk61}
 return
-item5S:
+h5S:
 sendplay +{vk61}
 return
 
-item6:
+h6:
 send {vk62}
 return
-item6S:
+h6S:
 sendplay +{vk62}
 return
 
 
 
-item1D:
+h1D:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 send {vk67}
 else
-send {%item1%}
+send {%h1%}
 return
-item1SD:
+h1SD:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 sendplay +{vk67}
 else
-sendplay +{%item1%}
+sendplay +{%h1%}
 return
 
 
-item2D:
+h2D:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 send {vk68}
 else
-send {%item2%}
+send {%h2%}
 return
-item2SD:
+h2SD:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 sendplay +{vk68}
 else
-sendplay +{%item2%}
+sendplay +{%h2%}
 return
 
 
-item3D:
+h3D:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 send {vk64}
 else
-send {%item3%}
+send {%h3%}
 return
-item3SD:
+h3SD:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 sendplay +{vk64}
 else
-sendplay +{%item3%}
+sendplay +{%h3%}
 return
 
-item4D:
+h4D:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 send {vk65}
 else
-send {%item4%}
+send {%h4%}
 return
-item4SD:
+h4SD:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 sendplay +{vk65}
 else
-sendplay +{%item4%}
+sendplay +{%h4%}
 return
 
 
-item5D:
+h5D:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 send {vk61}
 else
-send {%item5%}
+send {%h5%}
 return
-item5SD:
+h5SD:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 sendplay +{vk61}
 else
-sendplay +{%item5%}
+sendplay +{%h5%}
 return
 
-item6D:
+h6D:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 send {vk62}
 else
-send {%item6%}
+send {%h6%}
 return
-item6SD:
+h6SD:
 PixelGetColor, color, A_ScreenWidth*0.738, A_ScreenHeight*0.019
 if color=0x000000
 sendplay +{vk62}
 else
-sendplay +{%item6%}
+sendplay +{%h6%}
 return
 
 
@@ -552,9 +584,6 @@ PauseGame:
 sendplay {vk79}{vk4D}{vk52}
 return
 
-Toggle:
-pause
-return
 
 VK(Param)
 {
