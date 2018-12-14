@@ -96,16 +96,16 @@ if !A_IsAdmin
 		if h1=Space
 		{
 		Hotkey,%vh1%, Spaceh1
-		Hotkey,+%vh1%, Spaceh1S
+		Hotkey,+%vh1%, Spaceh1
 		}
 		else if StrLen(h1)=1 {
 		Hotkey,~%vh1%, h1
-		Hotkey,~+%vh1%, h1S
+		Hotkey,~+%vh1%, h1
 		}
 		else {
 		Hotkey,%vh1%, h1
 		if (!InStr(vh1, "&"))
-		Hotkey,+%vh1%, h1s
+		Hotkey,+%vh1%, h1
 		}
 	}
 	if vh2
@@ -113,16 +113,16 @@ if !A_IsAdmin
 		if h2=Space
 		{
 		Hotkey,%vh2%, Spaceh2
-		Hotkey,+%vh2%, Spaceh2S
+		Hotkey,+%vh2%, Spaceh2
 		}
 		else if StrLen(h2)=1 {
 		Hotkey,~%vh2%, h2
-		Hotkey,~+%vh2%, h2S
+		Hotkey,~+%vh2%, h2
 		}
 		else {
 		Hotkey,%vh2%, h2
 		if (!InStr(vh2, "&"))
-		Hotkey,+%vh2%, h2s
+		Hotkey,+%vh2%, h2
 		}
 	}
 	if vh3
@@ -130,16 +130,16 @@ if !A_IsAdmin
 		if h3=Space
 		{
 		Hotkey,%vh3%, Spaceh3
-		Hotkey,+%vh3%, Spaceh3S
+		Hotkey,+%vh3%, Spaceh3
 		}
 		else if StrLen(h3)=1 {
 		Hotkey,~%vh3%, h3
-		Hotkey,~+%vh3%, h3S
+		Hotkey,~+%vh3%, h3
 		}
 		else {
 		Hotkey,%vh3%, h3
 		if (!InStr(vh3, "&"))
-		Hotkey,+%vh3%, h3s
+		Hotkey,+%vh3%, h3
 		}
 	}
 	if vh4
@@ -147,11 +147,11 @@ if !A_IsAdmin
 		if h4=Space
 		{
 		Hotkey,%vh4%, Spaceh4
-		Hotkey,+%vh4%, Spaceh4S
+		Hotkey,+%vh4%, Spaceh4
 		}
 		else if StrLen(h4)=1 {
 		Hotkey,~%vh4%, h4
-		Hotkey,~+%vh4%, h4S
+		Hotkey,~+%vh4%, h4
 		}
 		else {
 		Hotkey,%vh4%, h4
@@ -163,16 +163,16 @@ if !A_IsAdmin
 		if h5=Space
 		{
 		Hotkey,%vh5%, Spaceh5
-		Hotkey,+%vh5%, Spaceh5S
+		Hotkey,+%vh5%, Spaceh5
 		}
 		else if StrLen(h5)=1 {
 		Hotkey,~%vh5%, h5
-		Hotkey,~+%vh5%, h5S
+		Hotkey,~+%vh5%, h5
 		}
 		else {
 		Hotkey,%vh5%, h5
 		if (!InStr(vh5, "&"))
-		Hotkey,+%vh5%, h5s
+		Hotkey,+%vh5%, h5
 		}
 	}
 	if vh6
@@ -180,16 +180,16 @@ if !A_IsAdmin
 		if h6=Space
 		{
 		Hotkey,%vh6%, Spaceh6
-		Hotkey,+%vh6%, Spaceh6S
+		Hotkey,+%vh6%, Spaceh6
 		}
 		else if StrLen(h6)=1 {
 		Hotkey,~%vh6%, h6
-		Hotkey,~+%vh6%, h6S
+		Hotkey,~+%vh6%, h6
 		}
 		else {
 		Hotkey,%vh6%, h6
 		if (!InStr(vh6, "&"))
-		Hotkey,+%vh6%, h6s
+		Hotkey,+%vh6%, h6
 		}
 	}
 
@@ -273,7 +273,7 @@ return
 configuration:
 if %configCreated%
 {
-gui, show, autosize center, SIH v1.9e
+gui, show, autosize center, SIH v1.9.1
 }
 else {
 Gui 1:Default
@@ -343,7 +343,7 @@ Gui, Add, Button, x15 w83 h25 gSave, &Save
 gui, add, button, x+5 w83 h25 gtoTray, &Hide
 Gui, Add, Button, x+5 w83 h25 gExit, E&xit
 
-gui, show, autosize center, SIH v1.9e
+gui, show, autosize center, SIH v1.9.1
 configCreated:=1
 }
 EmptyMem()
@@ -635,14 +635,6 @@ send ^{vk56}
 sleep, 50
 clipboard:=clipp
 return
-Spaceh1S:
-clipboard:=" "
-sendinput +{vk67}
-sleep, 50
-sendinput ^{vk56}
-sleep, 50
-clipboard:=clipp
-return
 
 Spaceh2:
 clipp:=clipboard
@@ -650,15 +642,6 @@ clipboard:=" "
 send {vk68}{vk08}
 sleep, 50
 send ^{vk56}
-sleep, 50
-clipboard:=clipp
-return
-Spaceh2S:
-clipp:=clipboard
-clipboard:=" "
-sendinput +{vk68}
-sleep, 50
-sendinput ^{vk56}
 sleep, 50
 clipboard:=clipp
 return
@@ -672,16 +655,6 @@ send ^{vk56}
 sleep, 50
 clipboard:=clipp
 return
-Spaceh3S:
-clipp:=clipboard
-clip:=clipboard
-clipboard:=" "
-sendinput +{vk64}
-sleep, 50
-sendinput ^{vk56}
-sleep, 50
-clipboard:=clipp
-return
 
 Spaceh4:
 clipp:=clipboard
@@ -689,15 +662,6 @@ clipboard:=" "
 send {vk65}{vk08}
 sleep, 50
 send ^{vk56}
-sleep, 50
-clipboard:=clipp
-return
-Spaceh4S:
-clipp:=clipboard
-clipboard:=" "
-sendinput +{vk65}
-sleep, 50
-sendinput ^{vk56}
 sleep, 50
 clipboard:=clipp
 return
@@ -711,15 +675,6 @@ send ^{vk56}
 sleep, 50
 clipboard:=clipp
 return
-Spaceh5S:
-clipp:=clipboard
-clipboard:=" "
-sendinput +{vk61}
-sleep, 50
-sendinput ^{vk56}
-sleep, 50
-clipboard:=clipp
-return
 
 Spaceh6:
 clipp:=clipboard
@@ -730,58 +685,30 @@ send ^{vk56}
 sleep, 50
 clipboard:=clipp
 return
-Spaceh6S:
-clipp:=clipboard
-clipboard:=" "
-sendinput +{vk62}
-sleep, 50
-sendinput ^{vk56}
-sleep, 50
-clipboard:=clipp
-return
 
 h1:
 send {vk67}{vk08}
-return
-h1S:
-sendinput +{vk67}
 return
 
 h2:
 send {vk68}{vk08}
 return
-h2S:
-sendinput +{vk68}
-return
 
 h3:
 send {vk64}{vk08}
-return
-h3S:
-sendinput +{vk64}
 return
 
 h4:
 send {vk65}{vk08}
 return
-h4S:
-sendinput +{vk65}
-return
 
 h5:
 send {vk61}{vk08}
-return
-h5S:
-sendinput +{vk61}
 return
 
 h6:
 send {vk62}{vk08}
 return
-h6S:
-sendinput +{vk62}
-return
-
 
 SendO2:
 send {vk4f}{vk08}
@@ -1018,8 +945,8 @@ VK(Param)
 }
 
 
-EmptyMem(PID="SIH v1.9e"){
-    pid:=(pid="SIH v1.9e") ? DllCall("GetCurrentProcessId") : pid
+EmptyMem(PID="SIH v1.9.1"){
+    pid:=(pid="SIH v1.9.1") ? DllCall("GetCurrentProcessId") : pid
     h:=DllCall("OpenProcess", "UInt", 0x001F0FFF, "Int", 0, "Int", pid)
     DllCall("SetProcessWorkingSetSize", "UInt", h, "Int", -1, "Int", -1)
     DllCall("CloseHandle", "Int", h)
