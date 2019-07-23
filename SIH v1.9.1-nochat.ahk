@@ -9,11 +9,12 @@ if !A_IsAdmin
     ExitApp
 }
 
-  #UseHook on
   #SingleInstance force
   #HotkeyInterval 0
+  #InstallKeybdHook 
+  #UseHook on
   #NoEnv
-  #MaxThreads 25
+  #MaxThreads
   Process, priority, , High
   SetWorkingDir %A_ScriptDir%
   SetBatchLines, -1
@@ -99,8 +100,8 @@ if !A_IsAdmin
 		Hotkey,+%vh1%, Spaceh1
 		}
 		else if StrLen(h1)=1 {
-		Hotkey,~%vh1%, h1
-		Hotkey,~+%vh1%, h1
+		Hotkey,%vh1%, h1
+		Hotkey,+%vh1%, h1
 		}
 		else {
 		Hotkey,%vh1%, h1
@@ -116,8 +117,8 @@ if !A_IsAdmin
 		Hotkey,+%vh2%, Spaceh2
 		}
 		else if StrLen(h2)=1 {
-		Hotkey,~%vh2%, h2
-		Hotkey,~+%vh2%, h2
+		Hotkey,%vh2%, h2
+		Hotkey,+%vh2%, h2
 		}
 		else {
 		Hotkey,%vh2%, h2
@@ -133,8 +134,8 @@ if !A_IsAdmin
 		Hotkey,+%vh3%, Spaceh3
 		}
 		else if StrLen(h3)=1 {
-		Hotkey,~%vh3%, h3
-		Hotkey,~+%vh3%, h3
+		Hotkey,%vh3%, h3
+		Hotkey,+%vh3%, h3
 		}
 		else {
 		Hotkey,%vh3%, h3
@@ -150,12 +151,13 @@ if !A_IsAdmin
 		Hotkey,+%vh4%, Spaceh4
 		}
 		else if StrLen(h4)=1 {
-		Hotkey,~%vh4%, h4
-		Hotkey,~+%vh4%, h4
+		Hotkey,%vh4%, h4
+		Hotkey,+%vh4%, h4
 		}
 		else {
 		Hotkey,%vh4%, h4
-
+		if (!InStr(vh4, "&"))
+		Hotkey,+%vh4%, h4
 		}
 	}
 	if vh5
@@ -166,8 +168,8 @@ if !A_IsAdmin
 		Hotkey,+%vh5%, Spaceh5
 		}
 		else if StrLen(h5)=1 {
-		Hotkey,~%vh5%, h5
-		Hotkey,~+%vh5%, h5
+		Hotkey,%vh5%, h5
+		Hotkey,+%vh5%, h5
 		}
 		else {
 		Hotkey,%vh5%, h5
@@ -183,8 +185,8 @@ if !A_IsAdmin
 		Hotkey,+%vh6%, Spaceh6
 		}
 		else if StrLen(h6)=1 {
-		Hotkey,~%vh6%, h6
-		Hotkey,~+%vh6%, h6
+		Hotkey,%vh6%, h6
+		Hotkey,+%vh6%, h6
 		}
 		else {
 		Hotkey,%vh6%, h6
@@ -273,7 +275,7 @@ return
 configuration:
 if %configCreated%
 {
-gui, show, autosize center, SIH v1.9.1
+gui, show, autosize center, SIH v1.9.1-nochat
 }
 else {
 Gui 1:Default
@@ -343,7 +345,7 @@ Gui, Add, Button, x15 w83 h25 gSave, &Save
 gui, add, button, x+5 w83 h25 gtoTray, &Hide
 Gui, Add, Button, x+5 w83 h25 gExit, E&xit
 
-gui, show, autosize center, SIH v1.9.1
+gui, show, autosize center, SIH v1.9.1-nochat
 configCreated:=1
 }
 EmptyMem()
@@ -629,7 +631,7 @@ return
 Spaceh1:
 clipp:=clipboard
 clipboard:=" "
-send {vk67}{vk08}
+send {vk67}
 sleep, 50
 send ^{vk56}
 sleep, 50
@@ -639,7 +641,7 @@ return
 Spaceh2:
 clipp:=clipboard
 clipboard:=" "
-send {vk68}{vk08}
+send {vk68}
 sleep, 50
 send ^{vk56}
 sleep, 50
@@ -649,7 +651,7 @@ return
 Spaceh3:
 clipp:=clipboard
 clipboard:=" "
-send {vk64}{vk08}
+send {vk64}
 sleep, 50
 send ^{vk56}
 sleep, 50
@@ -659,7 +661,7 @@ return
 Spaceh4:
 clipp:=clipboard
 clipboard:=" "
-send {vk65}{vk08}
+send {vk65}
 sleep, 50
 send ^{vk56}
 sleep, 50
@@ -669,7 +671,7 @@ return
 Spaceh5:
 clipp:=clipboard
 clipboard:=" "
-send {vk61}{vk08}
+send {vk61}
 sleep, 50
 send ^{vk56}
 sleep, 50
@@ -679,7 +681,7 @@ return
 Spaceh6:
 clipp:=clipboard
 clipboard:=" "
-send {vk62}{vk08}
+send {vk62}
 sleep, 50
 send ^{vk56}
 sleep, 50
@@ -687,31 +689,31 @@ clipboard:=clipp
 return
 
 h1:
-send {vk67}{vk08}
+send {vk67}
 return
 
 h2:
-send {vk68}{vk08}
+send {vk68}
 return
 
 h3:
-send {vk64}{vk08}
+send {vk64}
 return
 
 h4:
-send {vk65}{vk08}
+send {vk65}
 return
 
 h5:
-send {vk61}{vk08}
+send {vk61}
 return
 
 h6:
-send {vk62}{vk08}
+send {vk62}
 return
 
 SendO2:
-send {vk4f}{vk08}
+send {vk4f}
 return
 
 UnsendO:
@@ -723,14 +725,14 @@ SendO:
 if sendedo
 send {vk1B}
 else {
-send {vk4f}{vk08}
+send {vk4f}
 SetTimer, UnsendO, on
 }
 sendedo=!sendedo
 return
 
 Hold:
-send {vk48}{vk08}
+send {vk48}
 return
 
 disableK:
@@ -945,8 +947,8 @@ VK(Param)
 }
 
 
-EmptyMem(PID="SIH v1.9.1"){
-    pid:=(pid="SIH v1.9.1") ? DllCall("GetCurrentProcessId") : pid
+EmptyMem(PID="SIH v1.9.1-nochat"){
+    pid:=(pid="SIH v1.9.1-nochat") ? DllCall("GetCurrentProcessId") : pid
     h:=DllCall("OpenProcess", "UInt", 0x001F0FFF, "Int", 0, "Int", pid)
     DllCall("SetProcessWorkingSetSize", "UInt", h, "Int", -1, "Int", -1)
     DllCall("CloseHandle", "Int", h)
