@@ -8,13 +8,13 @@ If you need more powerfull hotkeys try AucT Hotkeys Tool
 **NOTE:** Windows only!  
 **NOTE:** autocast and scoreboard would not work in window mode
 
-###Fast Start:
+## Fast Start:
 
 1. Download SIH
 2. Unzip
 3. Run
 
-###Features:
+## Features:
 
 * Hotkeyfull - any hotkey is available
 * Shift+ support - Shift orders will work
@@ -26,11 +26,11 @@ If you need more powerfull hotkeys try AucT Hotkeys Tool
 * Furious - usese a little memory
 * Usefull - includes only the most needed functions
 
-###Functions
-######Inventory
+## Functions
+#### Inventory
 Simply remaps items. Shift order support and chat free.
 
-######Others
+#### Others
 - Shield Left Win
 - Disables left Window key
 - Function group
@@ -46,17 +46,17 @@ Simply remaps items. Shift order support and chat free.
 - Clip Cursor (in the tray)
 - Clip Cursor - captures mouse. Usefull for window-mode users.
 
-######Messages
+#### Messages
 Sends up to 20 multiline messages.
 
-######Default Keys
+#### Default Keys
 * Alt+[ - Show ally hp bar
 * Alt+] - Show enemy hp bar
 * Alt+P - Pause game
 * Home - Pause script (can be changed in SIH.ini)
 * Alt+J - Garena autojoiner. Hover your mouse on desired room. Press Alt+J. When it enter the room press again Alt+J to deactivate it.
 
-######Default Hotstrings
+#### Default Hotstrings
 * -1x1 will type -apshomnp
 * -pvp will type -apshomnp
 * -r will type -roll
