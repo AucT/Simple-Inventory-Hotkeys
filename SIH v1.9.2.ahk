@@ -1,13 +1,4 @@
 RegRead, UAC, HKEY_LOCAL_MACHINE, SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System, EnableLUA
-if !A_IsAdmin
-{
-	Log("Not running as admin. Restarting as admin")
-	if A_IsCompiled
-		DllCall("shell32\ShellExecuteA","uint",0,"str","RunAs","str",A_ScriptFullPath,"uint",0,"str",A_WorkingDir,"int",1)
-    else
-       DllCall("shell32\ShellExecuteA","uint",0,"str","RunAs","str",A_AhkPath,"str","""" . A_ScriptFullPath . """","str",A_WorkingDir,"int",1)
-    ExitApp
-}
 
   #SingleInstance force
   #HotkeyInterval 0
@@ -36,6 +27,7 @@ if !A_IsAdmin
   Menu, tray, add, About, About
   Menu, tray, add
   Menu, tray, add, Exit
+  Menu, Tray, Icon, %A_ScriptDir%\%A_ScriptName%,1,1
 
 
   IniRead, h1, %A_WorkingDir%\SIH.ini, Inventory, item1, %A_Space%
@@ -52,6 +44,8 @@ if !A_IsAdmin
   IniRead, sbY, %A_WorkingDir%\SIH.ini, Others, sbY,%A_Space%
   IniRead, h9, %A_WorkingDir%\SIH.ini, Others, Autocast, !F
   IniRead, h10, %A_WorkingDir%\SIH.ini, Others, Hold, %A_Space%
+  
+  IniRead, Chatfree, %A_WorkingDir%\SIH.ini, Others, Chatfree, 0
 
   IniRead, DONTshowConfig, %A_WorkingDir%\SIH.ini, Others, DONTshowConfig, 0
   IniRead, TMPHIDE, %A_WorkingDir%\SIH.ini, Others,TMPHIDE, 0
@@ -96,102 +90,214 @@ if !A_IsAdmin
 	{
 		if h1=Space
 		{
+		if (Chatfree) {
 		Hotkey,%vh1%, Spaceh1
 		Hotkey,+%vh1%, Spaceh1
+		} else {
+		Hotkey,%vh1%, Spaceh1NB
+		Hotkey,+%vh1%, Spaceh1NB
+		}
 		}
 		else if StrLen(h1)=1 {
-		Hotkey,%vh1%, h1
-		Hotkey,+%vh1%, h1
+		
+		if (Chatfree) {
+		Hotkey,~%vh1%, h1
+		Hotkey,~+%vh1%, h1
+		} else {
+		Hotkey,%vh1%, h1NB
+		Hotkey,+%vh1%, h1NB
+		}
 		}
 		else {
+		if (Chatfree) {
 		Hotkey,%vh1%, h1
 		if (!InStr(vh1, "&"))
 		Hotkey,+%vh1%, h1
+		}
+		else {
+		Hotkey,%vh1%, h1NB
+		if (!InStr(vh1, "&"))
+		Hotkey,+%vh1%, h1NB
+		}
 		}
 	}
 	if vh2
 	{
 		if h2=Space
 		{
-		Hotkey,%vh2%, Spaceh2
-		Hotkey,+%vh2%, Spaceh2
+		if (Chatfree) {
+		Hotkey,%vh1%, Spaceh2
+		Hotkey,+%vh1%, Spaceh2
+		} else {
+		Hotkey,%vh2%, Spaceh2NB
+		Hotkey,+%vh2%, Spaceh2NB
+		}
 		}
 		else if StrLen(h2)=1 {
-		Hotkey,%vh2%, h2
-		Hotkey,+%vh2%, h2
+		if (Chatfree) {
+		Hotkey,~%vh2%, h2
+		Hotkey,~+%vh2%, h2
 		}
 		else {
+		Hotkey,%vh2%, h2NB
+		Hotkey,+%vh2%, h2NB
+		}
+		}
+		else {
+		if (Chatfree) {
 		Hotkey,%vh2%, h2
 		if (!InStr(vh2, "&"))
 		Hotkey,+%vh2%, h2
+		}
+		else {
+		Hotkey,%vh2%, h2NB
+		if (!InStr(vh2, "&"))
+		Hotkey,+%vh2%, h2NB
+		}
 		}
 	}
 	if vh3
 	{
 		if h3=Space
 		{
+		if (Chatfree) {
 		Hotkey,%vh3%, Spaceh3
 		Hotkey,+%vh3%, Spaceh3
 		}
+		else {
+		Hotkey,%vh3%, Spaceh3NB
+		Hotkey,+%vh3%, Spaceh3NB
+		}
+		}
 		else if StrLen(h3)=1 {
-		Hotkey,%vh3%, h3
-		Hotkey,+%vh3%, h3
+		if (Chatfree) {
+		Hotkey,~%vh3%, h3
+		Hotkey,~+%vh3%, h3
 		}
 		else {
+		Hotkey,%vh3%, h3NB
+		Hotkey,+%vh3%, h3NB
+		}
+		}
+		else {
+		if (Chatfree) {
 		Hotkey,%vh3%, h3
 		if (!InStr(vh3, "&"))
 		Hotkey,+%vh3%, h3
+		}
+		else {
+		Hotkey,%vh3%, h3NB
+		if (!InStr(vh3, "&"))
+		Hotkey,+%vh3%, h3NB
+		}
 		}
 	}
 	if vh4
 	{
 		if h4=Space
 		{
+		if (Chatfree) {
 		Hotkey,%vh4%, Spaceh4
 		Hotkey,+%vh4%, Spaceh4
 		}
+		else {
+		Hotkey,%vh4%, Spaceh4NB
+		Hotkey,+%vh4%, Spaceh4NB
+		}
+		}
 		else if StrLen(h4)=1 {
-		Hotkey,%vh4%, h4
-		Hotkey,+%vh4%, h4
+		if (Chatfree) {
+		Hotkey,~%vh4%, h4
+		Hotkey,~+%vh4%, h4
 		}
 		else {
+		Hotkey,%vh4%, h4NB
+		Hotkey,+%vh4%, h4NB
+		}
+		}
+		else {
+		if (Chatfree) {
 		Hotkey,%vh4%, h4
 		if (!InStr(vh4, "&"))
 		Hotkey,+%vh4%, h4
+		}
+		else {
+		Hotkey,%vh4%, h4NB
+		if (!InStr(vh4, "&"))
+		Hotkey,+%vh4%, h4NB
+		}
 		}
 	}
 	if vh5
 	{
 		if h5=Space
 		{
+		if (Chatfree) {
 		Hotkey,%vh5%, Spaceh5
 		Hotkey,+%vh5%, Spaceh5
 		}
+		else {
+		Hotkey,%vh5%, Spaceh5NB
+		Hotkey,+%vh5%, Spaceh5NB
+		}
+		}
 		else if StrLen(h5)=1 {
-		Hotkey,%vh5%, h5
-		Hotkey,+%vh5%, h5
+		if (Chatfree) {
+		Hotkey,~%vh5%, h5
+		Hotkey,~+%vh5%, h5
 		}
 		else {
+		Hotkey,%vh5%, h5NB
+		Hotkey,+%vh5%, h5NB
+		}
+		}
+		else {
+		if (Chatfree) {
 		Hotkey,%vh5%, h5
 		if (!InStr(vh5, "&"))
 		Hotkey,+%vh5%, h5
+		}
+		else {
+		Hotkey,%vh5%, h5NB
+		if (!InStr(vh5, "&"))
+		Hotkey,+%vh5%, h5NB
+		}
 		}
 	}
 	if vh6
 	{
 		if h6=Space
 		{
+		if (Chatfree) {
 		Hotkey,%vh6%, Spaceh6
 		Hotkey,+%vh6%, Spaceh6
 		}
+		else {
+		Hotkey,%vh6%, Spaceh6NB
+		Hotkey,+%vh6%, Spaceh6NB
+		}
+		}
 		else if StrLen(h6)=1 {
-		Hotkey,%vh6%, h6
-		Hotkey,+%vh6%, h6
+		if (Chatfree) {
+		Hotkey,~%vh6%, h6
+		Hotkey,~+%vh6%, h6
 		}
 		else {
+		Hotkey,%vh6%, h6NB
+		Hotkey,+%vh6%, h6NB
+		}
+		}
+		else {
+		if (Chatfree) {
 		Hotkey,%vh6%, h6
 		if (!InStr(vh6, "&"))
 		Hotkey,+%vh6%, h6
+		}
+		else {
+		Hotkey,%vh6%, h6NB
+		if (!InStr(vh6, "&"))
+		Hotkey,+%vh6%, h6NB
+		}
 		}
 	}
 
@@ -211,11 +317,22 @@ FileDelete, %A_Startup%\SIH.lnk
 
 if h7 {
 if (StrLen(h7)=1 and h7!="``")
+if (Chatfree) {
 Hotkey,~%vh7%, SendO2
+}
+else {
+Hotkey,%vh7%, SendO2NB
+}
 else {
 SetTimer, UnsendO, 2000
 SetTimer, UnsendO, off
+
+if (Chatfree) {
 Hotkey,%vh7%, SendO
+}
+else {
+Hotkey,%vh7%, SendONB
+}
 }
 }
 if !sbX
@@ -238,8 +355,15 @@ Hotkey,%vh9%, AutoCastUAC
 else
 Hotkey,%vh9%, AutoCast
 }
-if h10
+if h10 {
+if (Chatfree) {
 Hotkey,~%vh10%,Hold
+}
+else {
+Hotkey,%vh10%,HoldNB
+}
+}
+
 
 if CustomGroups
 {
@@ -275,11 +399,11 @@ return
 configuration:
 if %configCreated%
 {
-gui, show, autosize center, SIH v1.9.1-nochat
+gui, show, autosize center, SIH v1.9.2
 }
 else {
 Gui 1:Default
-Gui, Add, Tab2, y0 h190, Inventory|Others|Messages|Readme
+Gui, Add, Tab2, y0 h200, Inventory|Others|Messages|Readme
 Gui, Tab, Inventory
 gui, font, s11, Verdana
 Gui, Add, Button, vb1 gSetItem x15 y35 w120 h40 , %h1%
@@ -308,6 +432,7 @@ gui, add, text, x+5,Show Scoreboard
 Gui, add, button,vb9 gSetItem x15 y+15 w60, %h9%
 gui, add, text, x+5,AutoCast
 
+Gui, Add, CheckBox, Checked%Chatfree% vChatfree x15 y+15, Chat-free (send backspace after hotkey usage).`nCan conflict with new dota maps (move to fountain).
 
 
 Gui, Tab, Messages
@@ -345,7 +470,7 @@ Gui, Add, Button, x15 w83 h25 gSave, &Save
 gui, add, button, x+5 w83 h25 gtoTray, &Hide
 Gui, Add, Button, x+5 w83 h25 gExit, E&xit
 
-gui, show, autosize center, SIH v1.9.1-nochat
+gui, show, autosize center, SIH v1.9.2
 configCreated:=1
 }
 EmptyMem()
@@ -579,7 +704,7 @@ ExitApp
 return
 
 About:
-Run http://auct.eu/sih/
+Run https://sih.auct.eu/
 return
 
 2GuiEscape:
@@ -605,7 +730,11 @@ WriteIni:
   IniWrite, %h7%, %A_WorkingDir%\SIH.ini, Others, LearnSkills
   IniWrite, %h8%, %A_WorkingDir%\SIH.ini, Others, ScoreBoard
   IniWrite, %h9%, %A_WorkingDir%\SIH.ini, Others, Autocast
-
+  
+  
+  IniWrite, %Chatfree%, %A_WorkingDir%\SIH.ini, Others, Chatfree
+  
+  
   IniWrite, %h10%, %A_WorkingDir%\SIH.ini, Others, Hold
 
   IniWrite, %DONTshowConfig%, %A_WorkingDir%\SIH.ini, Others, DONTshowConfig
@@ -631,6 +760,16 @@ return
 Spaceh1:
 clipp:=clipboard
 clipboard:=" "
+send {vk67}{vk08}
+sleep, 50
+send ^{vk56}
+sleep, 50
+clipboard:=clipp
+return
+
+Spaceh1NB:
+clipp:=clipboard
+clipboard:=" "
 send {vk67}
 sleep, 50
 send ^{vk56}
@@ -639,6 +778,16 @@ clipboard:=clipp
 return
 
 Spaceh2:
+clipp:=clipboard
+clipboard:=" "
+send {vk68}{vk08}
+sleep, 50
+send ^{vk56}
+sleep, 50
+clipboard:=clipp
+return
+
+Spaceh2NB:
 clipp:=clipboard
 clipboard:=" "
 send {vk68}
@@ -651,6 +800,17 @@ return
 Spaceh3:
 clipp:=clipboard
 clipboard:=" "
+send {vk64}{vk08}
+sleep, 50
+send ^{vk56}
+sleep, 50
+clipboard:=clipp
+return
+
+
+Spaceh3NB:
+clipp:=clipboard
+clipboard:=" "
 send {vk64}
 sleep, 50
 send ^{vk56}
@@ -659,6 +819,16 @@ clipboard:=clipp
 return
 
 Spaceh4:
+clipp:=clipboard
+clipboard:=" "
+send {vk65}{vk08}
+sleep, 50
+send ^{vk56}
+sleep, 50
+clipboard:=clipp
+return
+
+Spaceh4NB:
 clipp:=clipboard
 clipboard:=" "
 send {vk65}
@@ -671,6 +841,17 @@ return
 Spaceh5:
 clipp:=clipboard
 clipboard:=" "
+send {vk61}{vk08}
+sleep, 50
+send ^{vk56}
+sleep, 50
+clipboard:=clipp
+return
+
+
+Spaceh5NB:
+clipp:=clipboard
+clipboard:=" "
 send {vk61}
 sleep, 50
 send ^{vk56}
@@ -681,6 +862,16 @@ return
 Spaceh6:
 clipp:=clipboard
 clipboard:=" "
+send {vk62}{vk08}
+sleep, 50
+send ^{vk56}
+sleep, 50
+clipboard:=clipp
+return
+
+Spaceh6NB:
+clipp:=clipboard
+clipboard:=" "
 send {vk62}
 sleep, 50
 send ^{vk56}
@@ -689,30 +880,58 @@ clipboard:=clipp
 return
 
 h1:
+send {vk67}{vk08}
+return
+
+h1NB:
 send {vk67}
 return
 
 h2:
+send {vk68}{vk08}
+return
+
+h2NB:
 send {vk68}
 return
 
 h3:
+send {vk64}{vk08}
+return
+
+h3NB:
 send {vk64}
 return
 
 h4:
+send {vk65}{vk08}
+return
+
+h4NB:
 send {vk65}
 return
 
 h5:
+send {vk61}{vk08}
+return
+
+h5NB:
 send {vk61}
 return
 
 h6:
+send {vk62}{vk08}
+return
+
+h6NB:
 send {vk62}
 return
 
 SendO2:
+send {vk4f}{vk08}
+return
+
+SendO2NB:
 send {vk4f}
 return
 
@@ -725,6 +944,16 @@ SendO:
 if sendedo
 send {vk1B}
 else {
+send {vk4f}{vk08}
+SetTimer, UnsendO, on
+}
+sendedo=!sendedo
+return
+
+SendONB:
+if sendedo
+send {vk1B}
+else {
 send {vk4f}
 SetTimer, UnsendO, on
 }
@@ -732,6 +961,10 @@ sendedo=!sendedo
 return
 
 Hold:
+send {vk48}{vk08}
+return
+
+HoldNB:
 send {vk48}
 return
 
@@ -947,8 +1180,8 @@ VK(Param)
 }
 
 
-EmptyMem(PID="SIH v1.9.1-nochat"){
-    pid:=(pid="SIH v1.9.1-nochat") ? DllCall("GetCurrentProcessId") : pid
+EmptyMem(PID="SIH v1.9.2"){
+    pid:=(pid="SIH v1.9.2") ? DllCall("GetCurrentProcessId") : pid
     h:=DllCall("OpenProcess", "UInt", 0x001F0FFF, "Int", 0, "Int", pid)
     DllCall("SetProcessWorkingSetSize", "UInt", h, "Int", -1, "Int", -1)
     DllCall("CloseHandle", "Int", h)
